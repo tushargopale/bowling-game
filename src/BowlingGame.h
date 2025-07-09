@@ -9,5 +9,6 @@ public:
 public:
     void play(int playersCount);
 };
-
+int getNumericInput();
+bool isNumeric(const string& str);
 #endif

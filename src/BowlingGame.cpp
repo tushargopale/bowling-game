@@ -6,6 +6,28 @@ BowlingGame::BowlingGame(){
     cout << "Welcome!" << endl;
 }
 
+bool isNumeric(const string& str) {
+    if (str.empty()) return false;
+
+    for (int i = 0; i < str.length(); ++i) {
+        if (!isdigit(str[i])) return false;
+    }
+
+    return true;
+}
+
+// Get validated numeric input from user
+int getNumericInput() {
+    string input;
+    while (true) {
+        cin >> input;
+        if (isNumeric(input)) {
+            return stoi(input); // convert valid string to int
+        }
+        cout << "  Invalid input! Please enter a valid integer: ";
+    }
+}
+
 void BowlingGame::play(int playersCount) {
     Player player[playersCount];
     cout << "Enter bowling scores for 10 frames:\n";
@@ -17,17 +39,23 @@ void BowlingGame::play(int playersCount) {
             int roll_1, roll_2 = 0, roll_3 = 0;
             cout << "Frame " << frameNo << ":\n";
             cout << "  Enter roll 1: ";
-            cin >> roll_1;
-
+            roll_1 = getNumericInput();
             if (frameNo < 10 && roll_1 != 10) {
                 cout << "  Enter roll 2: ";
-                cin >> roll_2;
+                roll_2 = getNumericInput();
             } else if (frameNo == 10) {
-                cout << "  Enter roll 2: ";
-                cin >> roll_2;
+                // Suggested Change 1:
+                if (roll_1 != 10) {
+                    cout << "  Enter roll 2: ";
+                    roll_2 = getNumericInput();
+                } else {
+                    // skip roll 2
+                    roll_2 = 0;
+                }
+                
                 if (roll_1 == 10 || roll_1 + roll_2 == 10) {
                     cout << "  Enter roll 3 (bonus roll): ";
-                    cin >> roll_3;
+                    roll_3 = getNumericInput();
                 }
             }
 
